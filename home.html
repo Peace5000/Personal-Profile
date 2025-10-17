@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Peace Khutso</title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Poppins:wght@700&display=swap" rel="stylesheet">
+
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <style>
+        *{box-sizing:border-box;margin:0;padding:0}
+        :root{
+          --bg:#f9fbff;
+          --card:rgba(255,255,255,0.65);
+          --primary:#0f1724;
+          --muted:#6b7280;
+          --accent:#0966ff;
+          --border:rgba(255,255,255,0.3);
+          --radius:14px;
+          --transition:220ms cubic-bezier(.2,.9,.3,1);
+          --max-width:1200px;
+        }
+        html,body{
+          height:100%;background:var(--bg);color:var(--primary);
+          font-family:'Inter',system-ui,-apple-system,"Segoe UI",Roboto,Ubuntu,"Helvetica Neue",Arial;
+          scroll-behavior:smooth;-webkit-font-smoothing:antialiased;
+        }
+        a{text-decoration:none;color:inherit;}
+
+        .container{max-width:var(--max-width);margin:0 auto;padding:0 24px;}
+
+        /* Header */
+        header{
+          position:fixed;top:0;left:0;width:100%;
+          backdrop-filter:blur(10px);
+          background:linear-gradient(180deg,rgba(255,255,255,0.95),rgba(255,255,255,0.8));
+          border-bottom:1px solid var(--border);
+          z-index:1000;transition:box-shadow .3s ease;
+        }
+        header.scrolled{box-shadow:0 4px 20px rgba(15,23,36,0.06);}
+        .header-inner{display:flex;align-items:center;justify-content:space-between;max-width:var(--max-width);margin:0 auto;padding:14px 24px;}
+        .logo{font-weight:800;font-size:1.2rem;letter-spacing:-0.4px;cursor:pointer;}
+        nav ul{display:flex;gap:24px;list-style:none;}
+        nav a{font-weight:600;font-size:.95rem;color:var(--primary);transition:var(--transition);}
+        nav a:hover{color:var(--accent);transform:translateY(-2px);}
+        .header-right{display:flex;align-items:center;gap:16px;}
+        .profile-pic{width:48px;height:48px;border-radius:50%;object-fit:cover;border:2px solid var(--accent);cursor:pointer;transition:transform var(--transition),box-shadow var(--transition);box-shadow:0 4px 14px rgba(9,102,255,0.1);}
+        .profile-pic:hover{transform:scale(1.07);box-shadow:0 0 15px rgba(9,102,255,0.3);}
+
+        /* Lucide menu button */
+        .menu-btn{display:none;background:transparent;border:0;cursor:pointer;padding:8px;border-radius:8px;}
+        .menu-btn:hover{background:rgba(0,0,0,0.05);}
+        .menu-btn svg{width:26px;height:26px;stroke:var(--primary);stroke-width:2.5;}
+        @media(max-width:920px){
+          .menu-btn{display:inline-flex;align-items:center;justify-content:center;}
+          nav{
+            position:absolute;top:100%;right:0;left:0;
+            background:white;border-top:1px solid var(--border);
+            display:none;flex-direction:column;align-items:center;padding:16px 0;
+          }
+          nav.active{display:flex;}
+          nav ul{flex-direction:column;gap:16px;}
+          nav a{font-size:1.1rem;}
+        }
+
+        /* Hero */
+        .hero{min-height:90vh;display:flex;align-items:center;justify-content:center;
+          background:linear-gradient(180deg,#eef3ff 0%,#f9fbff 100%);padding:120px 0 80px;}
+        .hero-card{text-align:center;padding:48px;border-radius:var(--radius);background:var(--card);backdrop-filter:blur(16px);
+          box-shadow:0 12px 40px rgba(15,23,36,0.08);max-width:820px;margin:0 16px;transition:transform .5s,box-shadow .5s;}
+        .hero-card:hover{transform:translateY(-4px);box-shadow:0 16px 40px rgba(15,23,36,0.12);}
+        .hero-title{font-family:'Poppins',sans-serif;font-size:2.9rem;font-weight:700;letter-spacing:-.5px;margin-bottom:12px;}
+        .hero-sub{color:var(--muted);font-size:1.05rem;margin-bottom:20px;}
+        .hero-ctas{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;}
+        .btn{padding:12px 20px;border-radius:10px;border:0;font-weight:700;cursor:pointer;transition:var(--transition);font-size:.95rem;text-decoration:none;}
+        .btn-primary{background:var(--accent);color:#fff;}
+        .btn-primary:hover{box-shadow:0 0 18px rgba(9,102,255,0.4);transform:translateY(-2px);}
+        .btn-ghost{background:transparent;border:1px solid var(--border);color:var(--primary);}
+        .btn-ghost:hover{border-color:var(--accent);color:var(--accent);}
+
+        /* Sections */
+        section{padding:80px 0;}
+        section:nth-of-type(even){background:linear-gradient(180deg,#ffffff 0%,#f8fafc 100%);}
+        .section-title{text-align:center;font-size:1.9rem;font-weight:800;font-family:'Poppins',sans-serif;margin-bottom:30px;}
+
+        /* Skills */
+        .skills-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:20px;align-items:start;justify-items:center;max-width:980px;margin:20px auto 0;}
+        .skill-box{width:100%;max-width:180px;padding:18px;border-radius:var(--radius);background:var(--card);border:1px solid var(--border);
+          display:flex;flex-direction:column;align-items:center;gap:8px;text-align:center;transition:transform var(--transition),box-shadow var(--transition);}
+        .skill-box:hover{transform:translateY(-6px);box-shadow:0 10px 28px rgba(9,102,255,0.15);}
+        .skill-logo{width:44px;height:44px;object-fit:contain;}
+        .skill-title{font-weight:700;font-size:1rem;}
+        .skill-desc{font-size:0.85rem;color:var(--muted);}
+
+        /* Projects */
+        .project-list{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px;max-width:1080px;margin:0 auto;}
+        .project-card{background:var(--card);border-radius:var(--radius);border:1px solid var(--border);padding:22px;display:flex;flex-direction:column;gap:12px;
+          transition:transform var(--transition),box-shadow var(--transition);}
+        .project-card:hover{transform:translateY(-6px);box-shadow:0 12px 34px rgba(15,23,36,0.1);}
+        .project-title{font-weight:700;font-size:1.1rem;}
+        .project-tags{display:flex;gap:8px;flex-wrap:wrap;margin-top:auto;}
+        .tag{background:rgba(9,102,255,0.06);padding:6px 10px;border-radius:999px;font-weight:600;font-size:.8rem;color:var(--muted);}
+
+        /* Contact */
+        .contact-grid{display:grid;grid-template-columns:1fr 360px;gap:24px;max-width:1080px;margin:0 auto;}
+        .contact-form,aside{background:var(--card);border-radius:var(--radius);border:1px solid var(--border);padding:22px;}
+        .form-row{display:flex;gap:10px;margin-bottom:12px;}
+        input,textarea{width:100%;padding:10px;border-radius:10px;border:1px solid var(--border);background:rgba(151,124,0,0.08);font-size:0.95rem;}
+        textarea{min-height:140px;resize:vertical;}
+        .submit-btn{display:inline-block;padding:10px 16px;border-radius:10px;background:var(--accent);color:#fff;border:0;font-weight:700;cursor:pointer;}
+        .submit-btn:hover{box-shadow:0 0 16px rgba(9,102,255,0.35);transform:translateY(-2px);}
+
+        /* Footer */
+        footer{padding:32px 0;text-align:center;color:var(--muted);background:linear-gradient(180deg,#f8fafc 0%,#eef2ff 100%);border-top:1px solid var(--border);}
+
+        /* Back to top */
+        #backToTop{position:fixed;right:18px;bottom:18px;width:44px;height:44px;border-radius:10px;border:0;background:var(--accent);color:#fff;cursor:pointer;
+          display:none;align-items:center;justify-content:center;z-index:999;transition:transform .3s,box-shadow .3s;}
+        #backToTop:hover{transform:translateY(-3px);box-shadow:0 0 18px rgba(9,102,255,0.35);}
+    </style>
+</head>
+
+<body>
+<header>
+    <div class="header-inner">
+        <div class="logo">Peace</div>
+        <div class="header-right">
+            <nav aria-label="Primary navigation">
+                <ul>
+                    <li><a href="#hero">Home</a></li>
+                    <li><a href="#skills">Skills</a></li>
+                    <li><a href="#projects">Projects</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </nav>
+
+            <img src="IMG_6684.JPG" alt="Peace Khutso" class="profile-pic" id="profilePic" />
+
+            <button class="menu-btn" id="menuBtn" aria-label="Open menu" aria-expanded="false">
+                <i data-lucide="menu"></i>
+            </button>
+        </div>
+    </div>
+</header>
+
+<main>
+    <!-- Hero -->
+    <section id="hero" class="hero">
+        <div class="hero-card container">
+            <h1 class="hero-title">Hi, I'm Peace Khutso</h1>
+            <p class="hero-sub">I have interest in Software Development, This is my Profile page, Browse and Find out!</p>
+            <div class="hero-ctas">
+                <a class="btn btn-primary" href="#projects">View My Work</a>
+                <a class="btn btn-ghost" href="#contact">Get in Touch</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills -->
+    <section id="skills">
+        <h2 class="section-title">Skills</h2>
+        <div class="skills-grid">
+            <div class="skill-box">
+                <img class="skill-logo" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" alt="JS logo">
+                <div class="skill-title">JavaScript</div>
+                <p class="skill-desc">Frontend logic, APIs, UI interactivity.</p>
+            </div>
+            <div class="skill-box">
+                <img class="skill-logo" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" alt="Python logo">
+                <div class="skill-title">Python</div>
+                <p class="skill-desc">Data processing, automation, backend basics.</p>
+            </div>
+            <div class="skill-box">
+                <img class="skill-logo" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" alt="HTML logo">
+                <div class="skill-title">HTML5</div>
+                <p class="skill-desc">Semantic markup and responsive layouts.</p>
+            </div>
+            <div class="skill-box">
+                <img class="skill-logo" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg" alt="CSS logo">
+                <div class="skill-title">CSS3</div>
+                <p class="skill-desc">Modern styling and animations.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects -->
+    <section id="projects">
+        <h2 class="section-title">Projects</h2>
+        <div class="project-list">
+            <div class="project-card">
+                <div class="project-title">Chatbot App</div>
+                <p>Interactive chatbot project built on Replit, handling user queries and responses.</p>
+                <div class="project-tags">
+                    <span class="tag">Python</span>
+                    <span class="tag">Flask</span> <!-- or JS if JS based -->
+                    <span class="tag">AI</span>
+                </div>
+                <a class="btn btn-primary" href="https://peace056.pythonanywhere.com/" target="_blank">View Project</a>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Contact -->
+    <section id="contact">
+        <h2 class="section-title">Get in Touch</h2>
+        <div class="contact-grid">
+            <form class="contact-form">
+                <div class="form-row">
+                    <input type="text" placeholder="Name" required>
+                    <input type="email" placeholder="Email" required>
+                </div>
+                <textarea placeholder="Your message" required></textarea>
+                <button class="submit-btn" type="submit">Send Message</button>
+            </form>
+            <aside>
+                <h3>Let's connect</h3>
+                <p>If you'd like to collaborate or have a question, feel free to reach out.</p>
+                <p>Email: peace@example.com</p>
+            </aside>
+        </div>
+    </section>
+</main>
+
+<footer>
+    <small>© 2025 Peace Khutso · Built with care</small>
+</footer>
+
+<button id="backToTop" aria-label="Back to top">↑</button>
+
+<script>
+    lucide.createIcons();
+
+    const menuBtn = document.getElementById('menuBtn');
+    const nav = document.querySelector('nav');
+    const header = document.querySelector('header');
+    const backToTop = document.getElementById('backToTop');
+
+    menuBtn.addEventListener('click', () => {
+      const expanded = menuBtn.getAttribute('aria-expanded') === 'true';
+      menuBtn.setAttribute('aria-expanded', String(!expanded));
+      menuBtn.classList.toggle('active');
+      nav.classList.toggle('active');
+      menuBtn.innerHTML = menuBtn.classList.contains('active')
+        ? '<i data-lucide="x"></i>'
+        : '<i data-lucide="menu"></i>';
+      lucide.createIcons();
+    });
+
+    document.querySelectorAll('nav a').forEach(a => {
+      a.addEventListener('click', () => {
+        if (window.innerWidth <= 920) {
+          nav.classList.remove('active');
+          menuBtn.classList.remove('active');
+          menuBtn.setAttribute('aria-expanded', 'false');
+          menuBtn.innerHTML = '<i data-lucide="menu"></i>';
+          lucide.createIcons();
+        }
+      });
+    });
+
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 40) {
+        header.classList.add('scrolled');
+        backToTop.style.display = 'flex';
+      } else {
+        header.classList.remove('scrolled');
+        backToTop.style.display = 'none';
+      }
+    });
+    backToTop.addEventListener('click', () => window.scrollTo({top:0,behavior:'smooth'}));
+</script>
+</body>
+</html>
